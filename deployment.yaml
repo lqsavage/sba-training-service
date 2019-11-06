@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: training-service
+  namespace: sba
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: training-service
+  template:
+    metadata:
+      labels:
+        app: training-service
+    spec:
+      containers:
+        - name: sit-bmw-model
+          image: registry.cn-hangzhou.aliyuncs.com/dev_savage/sba-training:{version}
+          ports:
+            - name: http-port
+              containerPort: 10007
+          env:
+            - name: spring_profiles_active
+              value: k8s
+      imagePullSecrets:
+        - name: sbasecret
