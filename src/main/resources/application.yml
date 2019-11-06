@@ -1,0 +1,201 @@
+spring:
+    profiles:
+        active: local
+---
+spring:
+    profiles: local
+    application:
+        name: '@project.name@'
+    data:
+        mongodb:
+            authentication-database: training_service
+            database: training_service
+            host: ${server.host}
+            password: pass@word1
+            port: 27017
+            username: root
+    datasource:
+        tomcat:
+            initial-size: 15
+            max-active: 50
+            max-idle: 15
+            max-wait: 20000
+            min-idle: 8
+    mail:
+        host: smtp.163.com
+        password: Love735345Liqi
+        port: 25
+        properties:
+            mail:
+                debug: false
+                smtp:
+                    auth: true
+                    ssl:
+                        trust: smtp.163.com
+                    starttls:
+                        enable: true
+        username: lqsavage
+    sleuth:
+        sampler:
+            probability: 1.0
+    zipkin:
+        base-url: http://localhost:9090/
+info:
+    app:
+        artifactId: '@project.artifactId@'
+        description: '@project.description@'
+        groupId: '@project.groupId@'
+        name: '@project.name@'
+        version: '@project.version@'
+server:
+    host: localhost
+    port: 8085
+eureka:
+    client:
+        enabled: true
+        serviceUrl:
+            defaultZone: http://${server.host}:8761/eureka/
+    instance:
+        prefer-ip-address: true
+        healthCheckUrl: http://${server.host}:${server.port}/actuator/health
+        homePageUrl: http://${server.host}:${server.port}/
+        instance-id: ${spring.application.name}:${server.port}
+        leaseExpirationDurationInSeconds: 300
+        leaseRenewalIntervalInSeconds: 300
+        statusPageUrl: http://${server.host}:${server.port}/actuator/info
+    environment: dev
+feign:
+    hystrix:
+        enabled: true
+logging:
+    level:
+        org:
+            springframework:
+                web:
+                    servlet:
+                        DispatcherServlet: DEBUG
+management:
+    endpoint:
+        health:
+            show-details: always
+        shutdown:
+            enabled: true
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+    health:
+        db:
+            enabled: true
+        defaults:
+            enabled: true
+        diskspace:
+            enabled: true
+notcompleted_training:
+    job:
+        cron: 0 0/30 0 * * ?
+training_progress:
+    job:
+        cron: 0 0/30 0 * * ?
+training_started:
+    job:
+        cron: 0 0/10 0 * * ?
+
+---
+spring:
+    profiles: k8s
+    application:
+        name: '@project.name@'
+    data:
+        mongodb:
+            authentication-database: training_service
+            database: training_service
+            host: sba-mongo
+            password: pass@word1
+            port: 27017
+            username: root
+    datasource:
+        tomcat:
+            initial-size: 15
+            max-active: 50
+            max-idle: 15
+            max-wait: 20000
+            min-idle: 8
+    mail:
+        host: smtp.163.com
+        password: Love735345Liqi
+        port: 25
+        properties:
+            mail:
+                debug: false
+                smtp:
+                    auth: true
+                    ssl:
+                        trust: smtp.163.com
+                    starttls:
+                        enable: true
+        username: lqsavage
+    sleuth:
+        sampler:
+            probability: 1.0
+    zipkin:
+        base-url: http://zipkin-server:10002/
+info:
+    app:
+        artifactId: '@project.artifactId@'
+        description: '@project.description@'
+        groupId: '@project.groupId@'
+        name: '@project.name@'
+        version: '@project.version@'
+server:
+    port: 10007
+eureka:
+    client:
+        enabled: true
+        serviceUrl:
+            defaultZone: http://eureka-server:10001/eureka/
+    instance:
+        prefer-ip-address: true
+        healthCheckUrl: http://${spring.application.name}:${server.port}/actuator/health
+        homePageUrl: http://${spring.application.name}:${server.port}/
+        instance-id: ${spring.application.name}:${server.port}
+        leaseExpirationDurationInSeconds: 300
+        leaseRenewalIntervalInSeconds: 300
+        statusPageUrl: http://${spring.application.name}:${server.port}/actuator/info
+    environment: k8s
+feign:
+    hystrix:
+        enabled: true
+logging:
+    level:
+        org:
+            springframework:
+                web:
+                    servlet:
+                        DispatcherServlet: DEBUG
+management:
+    endpoint:
+        health:
+            show-details: always
+        shutdown:
+            enabled: true
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+    health:
+        db:
+            enabled: true
+        defaults:
+            enabled: true
+        diskspace:
+            enabled: true
+notcompleted_training:
+    job:
+        cron: 0 0/30 0 * * ?
+training_progress:
+    job:
+        cron: 0 0/30 0 * * ?
+training_started:
+    job:
+        cron: 0 0/10 0 * * ?
