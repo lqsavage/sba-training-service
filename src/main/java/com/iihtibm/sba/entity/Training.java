@@ -55,6 +55,10 @@ public class Training extends AuditModel {
 	@Field(value = "end_time")
 	private String endTime;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@Field(value = "enable_date")
+	private String enableDate;
+
 	@Field(value = "amount_received")
 	private Float amountReceived = 0.0f;
 
@@ -70,6 +74,7 @@ public class Training extends AuditModel {
 	@Field(value = "razorpay_payment_id")
 	private String razorpayPaymentId;
 
+	@Override
 	public Long getId() {
 		return id;
 	}
@@ -190,4 +195,11 @@ public class Training extends AuditModel {
 		this.razorpayPaymentId = razorpayPaymentId;
 	}
 
+	public String getEnableDate() {
+		return enableDate;
+	}
+
+	public void setEnableDate(String enableDate) {
+		this.enableDate = enableDate;
+	}
 }

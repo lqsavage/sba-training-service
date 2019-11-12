@@ -116,6 +116,19 @@ public class ScheduledJobs {
 		}
 	}
 
+	@Scheduled(cron = "${training_enable.job.cron}")
+	public synchronized void updateTrainingToEnable() {
+
+		List<String> trainingStatus = new ArrayList<String>();
+		trainingStatus.add(TrainingStatus.DISABLED.getStatus());
+
+		List<Training> trainingList = trainingService.findToBeEnabledTrainings(trainingStatus);
+		logger.info("Number of records found - To be enabled " + trainingList.size());
+		for (Training trainingObj : trainingList) {
+			trainingService.updateTrainingToEnable(trainingObj);
+		}
+	}
+
 	public static void main(String[] args) {
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd"); 

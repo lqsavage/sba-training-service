@@ -24,6 +24,8 @@ public class TrainingDtls extends AuditModel {
 	private String startTime;
 	@JsonFormat(pattern = "HH:mm:ss")
 	private String endTime;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private String enableDate;
 	private Float amountReceived;
 	private Long userId;
 	private String userName;
@@ -187,4 +189,11 @@ public class TrainingDtls extends AuditModel {
 		this.fees = fees;
 	}
 
+	public String getEnableDate() {
+		return enableDate;
+	}
+
+	public void setEnableDate(String enableDate) {
+		this.enableDate = enableDate;
+	}
 }

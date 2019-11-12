@@ -384,6 +384,14 @@ public class TrainingService {
 			updateFlag = true;
 		}
 
+		if (training.getStatus().equals(TrainingStatus.DISABLED.getStatus())) {
+			System.out.println("Re-enable date is " + training.getEnableDate());
+			logger.info("Re-enable date is {}", training.getEnableDate());
+			oldTraining.setStatus(training.getStatus());
+			oldTraining.setEnableDate(training.getEnableDate());
+			updateFlag = true;
+		}
+
 		if (updateFlag) {
 			trainingRepository.save(oldTraining);
 			if (mailFlag && skill.getName().length() > 0 && user.getFirstName().length() > 0) {
@@ -426,6 +434,10 @@ public class TrainingService {
 	public List<Training> findByTrainingStatus(List<String> trainingStatus) {
 		
 		return trainingRepository.findByTrainingStatus(trainingStatus);
+	}
+
+	public List<Training> findToBeEnabledTrainings(List<String> trainingStatus) {
+		return trainingRepository.findToBeEnabledTrainings(trainingStatus);
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -475,6 +487,15 @@ public class TrainingService {
 		}
 		trainingRepository.save(trainingObj);
 		return "Amount paid to mentor is " + amtToMentor;
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void updateTrainingToEnable(Training trainingObj) {
+
+		trainingObj.setStatus(TrainingStatus.PROPOSED.getStatus());
+		trainingObj.setEnableDate("");
+		trainingRepository.save(trainingObj);
+
 	}
 
 	

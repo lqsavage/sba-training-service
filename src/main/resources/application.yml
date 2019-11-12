@@ -100,6 +100,9 @@ training_progress:
 training_started:
     job:
         cron: 0 0/10 0 * * ?
+training_enable:
+    job:
+        cron: 0 0/1 9-17 12 * ?
 
 ---
 spring:
@@ -199,3 +202,6 @@ training_progress:
 training_started:
     job:
         cron: 0 0/10 0 * * ?
+training_enable:
+    job:
+        cron: 0 0/10 9-17 12 * ?

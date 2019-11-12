@@ -48,4 +48,7 @@ public interface TrainingsRepository extends MongoRepository<Training, Long>, Tr
 	
 	@Query(value = "{ 'amountReceived':{$ne:0}, 'status':{$in:?0} }")
 	List<Training> findByTrainingStatus(List<String> trainingStatus);
+
+	@Query(value = "{ 'status':{$in:?0}, 'enableDate':{'$lte':'new Date()'} }")
+	List<Training> findToBeEnabledTrainings(List<String> trainingStatus);
 }
